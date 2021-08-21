@@ -1,1 +1,2 @@
 # myCode
+This repo is to store some code to practice data structures .
