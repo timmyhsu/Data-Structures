@@ -17,7 +17,7 @@ std::ostream&  operator<< (std::ostream& os ,const sparsePoly &a)
 			res.addnonzero( b.__nonarr[runexpb].__coef , b.__nonarr[runexpb].__exp) ;
 		}
 	}
-	return res ;
+	return res ;ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 sparsePoly::sparsePoly (int nonzeronum)
