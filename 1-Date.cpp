@@ -10,12 +10,12 @@ class Date {
                 set<int> small {2,4,6,9,11};
                 set<int> big {1,3,4,7,8,10,12};
                 unsigned int arr[3] ;
-                string month[13] = {"  ","January" ,"February","March","April","May","June","July","August","September","October","November","December"};
+                string month[13] = {"  ","January" ,"February","March","April","May","June","July","August","September","October","November","December"}; // I am lazy ,so I write this .
 
-                bool err ()
+                bool err () // The function is to prevent the wrong seetings of date 
                 {
-                        if(this->arr[1] ==2 && this->arr[2]>29) return true ;
-                        if(small.count(this->arr[1]) && this->arr[2] >= 31 ) return true ;
+                        if(this->arr[1] ==2 && this->arr[2]>29) return true ; // February 
+                        if(small.count(this->arr[1]) && this->arr[2] >= 31 ) return true ; 
                         else if(big.count(this->arr[1]) && this->arr[2] >= 32 ) return true ;
                         else false ;
                 }
@@ -37,12 +37,12 @@ class Date {
                                 }
                                 ++tail ;
                         }
-                }
+                } // Constructor
                 void show ()
                 {
                         if(err()) cout << "Wrong Input" << endl ;
                         else cout << this->month[arr[1]] << " " << this->arr[2] << ", " << this->arr[0]<< endl  ;
-                }
+                } // I would like to use ostream at first , but I can't deal with the bug
 
 };
 
@@ -50,9 +50,9 @@ class Date {
 int main ()
 {
         string temp ;
-        while(cin >> temp)
+        while(cin >> temp) // input the date till EOF , ex: YYYY/MM/DD
         {
                 Date a (temp) ;
-                a.show();
+                a.show(); 
         }
 }
