@@ -8,7 +8,7 @@ class Date {
 
         private :
                 set<int> small {2,4,6,9,11};
-                set<int> big {1,3,4,7,8,10,12};
+                set<int> big {1,3,5,7,8,10,12};
                 unsigned int arr[3] ;
                 string month[13] = {"  ","January" ,"February","March","April","May","June","July","August","September","October","November","December"}; // I am lazy ,so I write this .
 
