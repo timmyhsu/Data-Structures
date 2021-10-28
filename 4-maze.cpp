@@ -58,8 +58,7 @@ int main()
         }
 
         Queue<node> path (height * width) ;
-        path.push(start) ;
-
+        path.push(start) ; 
         while (!((path.front().x == tail.x) && (path.front().y == tail.y)))
         {
                 if ( maze[path.front().x][path.front().y-1] != N && maze[path.front().x][path.front().y-1] == -1) // left
