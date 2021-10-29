@@ -18,12 +18,12 @@ int main()
 {
         int height , width ;
         cin >> height >> width ;
-        int **maze = new int* [height + 2] ;
+        int **maze = new int* [height + 2] ; // made a width+2  * height+2  maze 
 
         for (int x = 0 ; x<height + 2 ; ++x )
                 maze[x] = new int [width + 2] ;
 
-        for(int x =0 ; x<height+2 ;++x)
+        for(int x =0 ; x<height+2 ;++x) // first , let all of them is N 
         {
                 for (int y = 0;y<width+2;++y)
                 {
@@ -35,7 +35,7 @@ int main()
         {
                 for(int y= 1;y<=width;++y)
                 {
-                        maze[x][y] = -1 ;
+                        maze[x][y] = -1 ; // second , let the variable in [1 -> height][1 -> width] be -1 , see it as the path doesn't walk yet 
                 }
         }
         node start ,tail ;
@@ -43,9 +43,9 @@ int main()
         {
                 int fir ;
                 char sec ;
-                while (cin >> fir && fir != 0 )
+                while (cin >> fir && fir != 0 ) // input the first number 
                 {
-                        cin >> sec ;
+                        cin >> sec ; // input the second number and identify it is 'x' ,'s' ,or 't'
                         if (sec == 'x') maze[x][fir] = N ;
                         else if (sec == 's') 
                         {
@@ -57,9 +57,10 @@ int main()
                 }
         }
 
-        Queue<node> path (height * width) ;
-        path.push(start) ; 
-        while (!((path.front().x == tail.x) && (path.front().y == tail.y)))
+        Queue<node> path (height * width) ; // I create a queue with capacity of height*width 
+        path.push(start) ; // push the point if start 
+
+        while (!((path.front().x == tail.x) && (path.front().y == tail.y))) //until the front of queue is equal to the tail 
         {
                 if ( maze[path.front().x][path.front().y-1] != N && maze[path.front().x][path.front().y-1] == -1) // left
                 {
@@ -88,39 +89,38 @@ int main()
 
                 path.pop();
         }
-        tail = path.front() ;
+        tail = path.front() ; 
         int x = tail.x ,y = tail.y ;
         node arr [tail.step+1] = {} ;
         arr[tail.step] = tail ;
-        for (int i = tail.step -1 ; i >=0 ; --i)
+        for (int i = tail.step -1 ; i >=0 ; --i) // this for loop is to store the route from the last point to the start point
         {
-                if ( maze[x+1][y] == i) 
+                if ( maze[x+1][y] == i) //down
                 {
                         node temp (x+1,y,i) ;
                         arr[i] = temp ; ++x; 
                 }
-                else if ( maze[x][y+1] == i)
+                else if ( maze[x][y+1] == i)//right
                 {       
                         node temp (x,y+1,i) ;
                         arr[i] = temp  ; ++y ;
                 }
-                else if ( maze[x-1][y] == i) 
+                else if ( maze[x-1][y] == i) //up
                 {
                         node temp (x-1,y,i) ;
                         arr[i] = temp  ; --x ;
                 }
-                else if ( maze[x][y-1] == i) 
+                else if ( maze[x][y-1] == i)  //left
                 {
                         node temp (x,y-1,i) ;
                         arr[i] = temp  ; --y ;
                 }
         }
 
-        for (int i = 0 ; i<=tail.step ;++i)
+        for (int i = 0 ; i<=tail.step ;++i) //output the array that store the shortest path of the maze 
         {
                 cout << "(" << arr[i].x << "," << arr[i].y << ")" << endl ;
         }
 
 
 }
-
