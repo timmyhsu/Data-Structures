@@ -1,7 +1,7 @@
 #include<iostream>
 using namespace std ;
 
-template <class T>
+template <class T> //the template
 class Queue 
 {
         private:
@@ -16,13 +16,14 @@ class Queue
                 }
                 void push(T inp)
                 {
-                        if (tag && rear == first)
+                        if (tag && rear == first) // when tag is true and rear == first , it's full
                                 std::cout << "Full!" << std::endl ;
                         else
                         {
                                 rear = (rear + 1) % size ;
                                 arr[rear] = inp ;
-                                if (rear == first) tag = true ;
+                                if (rear == first) tag = true ; // after rear +1 , if rear == first ,we have to let tag be true 
+                                                                // because when tag is true ,and rear == first ,it's full .
                         }
 
                 }
