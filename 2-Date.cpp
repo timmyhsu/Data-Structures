@@ -13,8 +13,8 @@ class Date {
         friend ostream& operator << (ostream& , Date& );
         private :
                 set<int> small {2,4,6,9,11};
-                set<int> big {1,3,4,7,8,10,12};
-                unsigned int arr[3] = {0};
+                set<int> big {0,1,3,4,7,8,10,12};
+                int arr[3] = {0};
                 // int cardin [12] = {2,5,0,3,5,1,4,6,2,4,0,3};
                 const string month[13] = {"  ","January" ,"February","March","April","May","June","July","August","September","October","November","December"};
                 const string week[7] = {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday" } ;
@@ -46,7 +46,7 @@ class Date {
                         else return 30 ;
                 }
         public :
-                Date ();
+                Date () = default ;
                 Date (string str)
                 {
                         str += '/' ;
@@ -77,7 +77,7 @@ class Date {
                         if (this->arr[0] == a.arr[0] &&this->arr[1] == a.arr[1] && this->arr[2] == a.arr[2]) return true;
                         else return false ;
                 }
-                void show ()  const 
+                void show (int check = 0 )  const 
                 {
                         int cardin [12] = {2,5,0,3,5,1,4,6,2,4,0,3};
                         int tmpy = this->arr[0] ,tmpm = this->arr[1]  ; //temporary year ,month
@@ -98,8 +98,8 @@ class Date {
                                                 month += 1 ;
                                 }
                         }
-                        // cout << "DDD" << endl ;cout << this->arr[1] << this->arr[2] << this->arr[0] ; cout << "DDD" ;
-                        cout << month[this->arr[1]] << " " << this->arr[2] << " , " << this->arr[0] << " is " << week[(this->arr[2] + cardin[tmpm])%7] ;
+                        cout << month[this->arr[1]] << " " << this->arr[2] << " , " << this->arr[0]  ;
+                        if (check == 1 ) cout << " is " << week[(this->arr[2] + cardin[tmpm])%7]  ;
                 }// I would like to use ostream at first , but I can't deal with the bug
 
 };
@@ -124,14 +124,14 @@ Date& operator+ (Date &front ,int bck)
         else
         {
                 front.arr[2] += bck ;
-                while (front.arr[2] > 0 )
+                while(front.arr[2] <= 0 )
                 {
-                        if(front.arr[1] < 1) 
-                        { front.arr[1]+=11 ;front.arr[0] -= 1 ;}
-                        else 
+                        front.arr[2] += front.dayofmonth(front.arr[0],front.arr[1]-1) ;
+                        --front.arr[1] ;
+                        while(front.arr[1] <= 0 )
                         {
-                                front.arr[2] += front.dayofmonth(front.arr[0],front.arr[1]-1);
-                                --front.arr[1] ;
+                                front.arr[1] += 12 ;
+                                --front.arr[0] ;
                         }
                 }
         }
@@ -141,10 +141,13 @@ Date& operator+ (Date &front ,int bck)
 
 int operator- (Date &front , Date &bck)
 {
-        int x ;
-        for( x = 0; ;++x)
-                if(front + x == bck) break ;
-        return x ;
+        int x = 0 ;
+        for( ; ;--x)
+        {
+                Date temp = front ;
+                if(temp + x == bck ) break ; //cout << x << endl ;}
+        }
+        return -x ;
 
 }
 /*ostream& operator << (ostream &os , Date &a)
@@ -173,30 +176,34 @@ int main ()
 {
         string temp ;
         int x = 0;
-        cin >> temp ;
-        Date a (temp) ;
-        cin >> temp ;
+        while ( cin >> temp )
         {
+                Date a (temp) ;
+                cin >> temp ;
                 switch (type(temp))
                 {
                         case 1:
                                 {
                                         int dayafter ; cin >> dayafter ;
-                                        //a.show();
-                                        (a + dayafter).show(); 
-                                        //cout << " DDD " << endl ;
+                                        cout << dayafter << " after " ;
+                                        a.show() ; cout << " is " ;
+                                        (a + dayafter).show();cout << endl ; 
+                                        break ;
                                 }
-                                 break;
                         case 2:
                                  {
                                          string tmp ; cin >> tmp ; Date b(tmp) ;
+                                         cout << a-b <<  " days from " ;
+                                         a.show() ;
+                                         cout <<" to ";
                                          b.show() ;
-                                         cout << a - b << endl ;
+                                         cout << endl;
+                                         break ;
                                  }
-                                break ;
                         default :
-                                a.show();
+                                a.show(1); cout << endl ;
                                 break ;
                 }
         }
 }
+    
